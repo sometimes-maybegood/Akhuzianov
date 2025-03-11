@@ -148,7 +148,7 @@ def add_job():
         jobs.size = form.title.data
         jobs.collab = form.content.data
         jobs.is_private = form.is_private.data
-        current_user.news.append(jobs)
+        current_user.jobs.append(jobs)
         db_sess.merge(current_user)
         db_sess.commit()
         return redirect('/')
