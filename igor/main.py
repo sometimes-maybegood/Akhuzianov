@@ -6,6 +6,8 @@ from forms.user import RegisterForm, LoginForm
 from data.news import News
 from data.users import User
 from data import db_session
+from forms.jobs import JobsForm
+from data.jobs import Jobs
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -132,6 +134,25 @@ def login():
             return redirect("/")
         return render_template('login.html', message="Неправильный логин или пароль", form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/addjob', methods=['GET', 'POST'])
+@login_required
+def add_job():
+    form = JobsForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        jobs = Jobs()
+        jobs.title = form.title.data
+        jobs.content = form.content.data
+        jobs.size = form.title.data
+        jobs.collab = form.content.data
+        jobs.is_private = form.is_private.data
+        current_user.news.append(jobs)
+        db_sess.merge(current_user)
+        db_sess.commit()
+        return redirect('/')
+    return render_template('news.html', title='Добавление новости', form=form)
 
 
 if __name__ == '__main__':
