@@ -152,7 +152,7 @@ def add_job():
         db_sess.merge(current_user)
         db_sess.commit()
         return redirect('/')
-    return render_template('news.html', title='Добавление новости', form=form)
+    return render_template('jobs.html', title='Подать заявку на работу', form=form)
 
 
 if __name__ == '__main__':
